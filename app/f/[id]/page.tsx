@@ -8,6 +8,7 @@ type FilePageProps = {
   params: { id: string };
 };
 
+// Supabase client (server-side)
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE!
@@ -24,14 +25,16 @@ export default async function FilePage({ params }: FilePageProps) {
     .single();
 
   if (error || !file) {
+    console.error("File not found in Supabase:", error);
     return notFound();
   }
 
-  // skapa signerad Backblaze-länk
+  // skapa signerad URL från Backblaze (giltig i 1h)
   const command = new GetObjectCommand({
     Bucket: BUCKET,
     Key: id,
   });
+
   const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
   return (
