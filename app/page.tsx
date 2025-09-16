@@ -9,8 +9,8 @@ export default function Page() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dirInputRef = useRef<HTMLInputElement>(null);
 
-  const [fileName, setFileName] = useState<string>("filens-namn.pdf");
-  const [fish, setFish] = useState<string>("/fisk.png");
+  const [fileName, setFileName] = useState("filens-namn.pdf");
+  const [fish, setFish] = useState("/fisk.png");
   const [selectedFiles, setSelectedFiles] = useState<File[] | null>(null);
   const [selectedDir, setSelectedDir] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
@@ -28,15 +28,10 @@ export default function Page() {
   async function onCreateLink() {
     setLoading(true);
 
-    // ✳️ Koppla in din befintliga upload-logik här.
-    // Skicka selectedFiles/selectedDir & ev. valt "fish" till ditt API.
-    // Anta att API svarar med en publikt delbar URL (fileUrl) och ett id/token.
-
-    // Demo: fejkad URL & id – byt till svar från ditt API
+    // TODO: ersätt med din riktiga upload-logik
     const fileUrl = "https://torskfile.s3.eu.../dinfil.pdf";
     const id = "abc123";
 
-    // Visa länkvyn och skicka med URL i query
     router.push(`/link?url=${encodeURIComponent(fileUrl)}&id=${id}`);
   }
 
@@ -70,10 +65,7 @@ export default function Page() {
             onChange={onChooseFiles}
           />
 
-          {/* mappar (webkitdirectory funkar i Chromium-baserade & Safari) */}
-          {/* TS bryr sig inte om custom-attribut → @ts-expect-error för att slippa fel */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {/* @ts-expect-error */}
+          {/* @ts-expect-error webkitdirectory är inte typat i TS DOM men funkar i browsern */}
           <input
             ref={dirInputRef}
             type="file"
@@ -92,13 +84,20 @@ export default function Page() {
 
           <div className="tf-field">
             <label>Välj fisk</label>
-            <button className="tf-fish-picker" onClick={() => setFish("/fisk.png")}>
+            <button
+              className="tf-fish-picker"
+              onClick={() => setFish("/fisk.png")}
+            >
               <img src={fish} alt="Fisk" />
             </button>
           </div>
         </div>
 
-        <button className="tf-primary" onClick={onCreateLink} disabled={loading}>
+        <button
+          className="tf-primary"
+          onClick={onCreateLink}
+          disabled={loading}
+        >
           {loading ? "Skapar..." : "Skapa en länk"}
         </button>
       </div>
