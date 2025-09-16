@@ -1,8 +1,8 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import Hero from "@/components/Hero";
 import { useState } from "react";
+import Hero from "@/components/Hero";
 
 export default function LinkPage() {
   const search = useSearchParams();
@@ -16,7 +16,7 @@ export default function LinkPage() {
     if (!url) return;
     await navigator.clipboard.writeText(url);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    setTimeout(() => setCopied(false), 1200);
   }
 
   return (
@@ -33,7 +33,7 @@ export default function LinkPage() {
         </div>
 
         <button className="tf-secondary" onClick={() => router.push(`/get/${id}?url=${encodeURIComponent(url)}`)}>
-          Testa mottagarvy
+          Förhandsvisa mottagarvyn
         </button>
       </div>
     </Hero>
