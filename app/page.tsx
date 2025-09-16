@@ -65,12 +65,13 @@ export default function Page() {
             onChange={onChooseFiles}
           />
 
-          {/* @ts-expect-error webkitdirectory är inte typat i TS DOM men funkar i browsern */}
           <input
             ref={dirInputRef}
             type="file"
             className="tf-hidden"
+            // @ts-ignore – webkitdirectory finns inte i TS-typer men funkar i browsern
             webkitdirectory=""
+            // @ts-ignore – directory finns inte i TS-typer men funkar i browsern
             directory=""
             onChange={onChooseDir}
           />
@@ -85,6 +86,7 @@ export default function Page() {
           <div className="tf-field">
             <label>Välj fisk</label>
             <button
+              type="button"
               className="tf-fish-picker"
               onClick={() => setFish("/fisk.png")}
             >
@@ -94,6 +96,7 @@ export default function Page() {
         </div>
 
         <button
+          type="button"
           className="tf-primary"
           onClick={onCreateLink}
           disabled={loading}
