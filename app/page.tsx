@@ -1,35 +1,51 @@
 "use client";
+
 import { useState } from "react";
 
 export default function Home() {
-  const [file, setFile] = useState<File | null>(null);
-
-  async function handleUpload() {
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await res.json();
-    alert("Här är din nedladdningslänk: " + window.location.origin + "/f/" + data.id);
-  }
+  const [step, setStep] = useState<"upload" | "link" | "download">("upload");
 
   return (
-    <main style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>TorskFile</h1>
-      <p>Upload a file(max 4GB)</p>
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
-      />
-      <button onClick={handleUpload} style={{ marginLeft: "1rem" }}>
-        Upload
-      </button>
-    </main>
+    <div className="page">
+      {/* Logga */}
+      <img src="/torskfile-logo.svg" alt="TorskFile" className="logo" />
+      {/* Vågen */}
+      <img src="/wave.svg" alt="Wave" className="wave" />
+
+      {step === "upload" && (
+        <div className="box">
+          <h2>Ladda upp en fil</h2>
+          <input type="file" />
+          <button onClick={() => setStep("link")}>Skapa en länk</button>
+        </div>
+      )}
+
+      {step === "link" && (
+        <div className="box">
+          <h2>Din fil har laddats upp!</h2>
+          <input
+            type="text"
+            readOnly
+            value="https://torskfile.s3.eu..."
+            className="linkfield"
+          />
+          <button onClick={() => setStep("download")}>Kopiera länk</button>
+        </div>
+      )}
+
+      {step === "download" && (
+        <>
+          <div className="box">
+            <h2>Du har fått en TorskFile!</h2>
+            <p>Upphör om 7 dagar</p>
+            <p>Fånga fisken eller klicka här:</p>
+            <button>Hämta</button>
+          </div>
+          <a href="/din-fil.pdf" download>
+            <img src="/fisk.png" alt="Fisk" className="fish" />
+          </a>
+        </>
+      )}
+    </div>
   );
 }
