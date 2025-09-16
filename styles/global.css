@@ -1,29 +1,75 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f8f8f8;
-    text-align: center;
-    padding: 40px;
+  margin: 0;
+  background: #87cefa; /* ljusblå */
+  font-family: Arial, sans-serif;
+}
+
+/* Logga */
+.logo {
+  display: block;
+  margin: 40px auto 0 auto;
+  max-width: 80%;
+}
+
+/* Vågen */
+.wave {
+  display: block;
+  width: 100%;
+  margin-top: -50px;
+  z-index: 1;
+}
+
+/* Fisken simmar */
+.fish {
+  position: absolute;
+  bottom: 100px;
+  left: -200px;
+  width: 180px;
+  animation: swim 12s linear infinite;
+  cursor: pointer;
+}
+
+@keyframes swim {
+  0% {
+    transform: translateX(-200px) translateY(0);
   }
-  
-  h1 {
-    color: #333;
+  25% {
+    transform: translateX(30vw) translateY(-20px);
   }
-  
-  input, button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
+  50% {
+    transform: translateX(60vw) translateY(10px);
   }
-  
-  button {
-    background: #0070f3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  75% {
+    transform: translateX(90vw) translateY(-15px);
   }
-  
-  button:hover {
-    background: #0055aa;
+  100% {
+    transform: translateX(120vw) translateY(0);
   }
-  
+}
+
+/* Boxen */
+.box {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 16px;
+  padding: 20px 30px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.box button {
+  background: #0070f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.box button:hover {
+  background: #0059c1;
+}
