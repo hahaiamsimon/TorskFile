@@ -1,25 +1,31 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 
-export default function DownloadPage() {
-  const search = useSearchParams();
-  const fileUrl = decodeURIComponent(search.get("url") || "#");
+export default function GetPage() {
+  const router = useRouter();
+  const { id } = useParams<{ id: string }>();
+  const [caught, setCaught] = useState(false);
+
+  function catchFish() {
+    setCaught(true);
+    setTimeout(() => {
+      router.push(`/f/${id}`);
+    }, 1000);
+  }
 
   return (
     <Hero>
-      <div className="tf-card tf-card--download">
-        <h2>Du har fått en TorskFile!</h2>
-        <p className="tf-subtle">Upphör om 7 dagar</p>
-        <p>Fånga fisken eller klicka här:</p>
-        <a className="tf-primary" href={fileUrl}>Hämta</a>
+      <div className="tf-catch-zone">
+        {!caught ? (
+          <button className="tf-fish" onClick={catchFish}>
+            🐟
+          </button>
+        ) : (
+          <div className="tf-caught">Du fångade fisken! 🎉</div>
+        )}
       </div>
-
-      {/* Simmande fisk (klickbar) */}
-      <a className="tf-fish-link" href={fileUrl} aria-label="Hämta fil genom att fånga fisken">
-        <img src="/fisk.png" alt="Fisk" className="tf-fish" />
-      </a>
     </Hero>
   );
 }

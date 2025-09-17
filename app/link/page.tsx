@@ -1,16 +1,19 @@
 "use client";
-
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 
 export default function LinkPage() {
   const search = useSearchParams();
   const router = useRouter();
-  const url = decodeURIComponent(search.get("url") || "");
   const id = search.get("id") || "";
 
+  const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (id) setUrl(`${window.location.origin}/f/${id}`);
+  }, [id]);
 
   async function copy() {
     if (!url) return;
@@ -32,7 +35,7 @@ export default function LinkPage() {
           </button>
         </div>
 
-        <button className="tf-secondary" onClick={() => router.push(`/get/${id}?url=${encodeURIComponent(url)}`)}>
+        <button className="tf-secondary" onClick={() => router.push(`/get/${id}`)}>
           Förhandsvisa mottagarvyn
         </button>
       </div>

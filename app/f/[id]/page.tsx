@@ -1,3 +1,4 @@
+export const revalidate = 0; // eller: export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import { BUCKET, s3 } from "@/lib/s3";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
